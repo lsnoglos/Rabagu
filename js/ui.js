@@ -11,7 +11,7 @@ const UI = (() => {
   const badge = s => `<span class="badge ${escape(s).toLowerCase()}">${escape(s)}</span>`;
   const empty = t => `<div class="empty">${escape(t)}</div>`;
   const formData = form => Object.fromEntries(new FormData(form).entries());
-  const productCard = (p,u,fav=false) => `<article class="card product"><img src="${p.image}" alt="${escape(p.name)}"><button class="heart" data-action="fav" data-id="${p.id}">${fav?'♥':'♡'}</button><h3>${escape(p.name)}</h3><p>Por ${escape(u?.name||'')}</p><p class="muted">${escape(p.category)} · ${escape(p.location)}</p><strong class="price">${money(p.price)}</strong><div class="row"><button class="secondary" data-action="view-product" data-id="${p.id}">Ver producto</button><button data-action="add-cart" data-id="${p.id}">Agregar</button></div></article>`;
+  const productCard = (p,u,fav=false,currentUserId='') => { const own=p.sellerId===currentUserId; return `<article class="card product"><img src="${p.image}" alt="${escape(p.name)}"><button class="heart" data-action="fav" data-id="${p.id}">${fav?'♥':'♡'}</button><h3>${escape(p.name)}</h3><p>Por ${escape(u?.name||'')}</p><p class="muted">${escape(p.category)} · ${escape(p.location)}</p><strong class="price">${money(p.price)}</strong><div class="row"><button class="secondary" data-action="view-product" data-id="${p.id}">Ver producto</button>${own?'<button disabled title="Este producto es tuyo">Producto propio</button>':`<button data-action="add-cart" data-id="${p.id}">Agregar</button>`}</div></article>`; };
   window.formatDate=formatDate; window.formatTime=formatTime; window.formatDateTime=formatDateTime;
   return {$, escape, money, toast, modal, closeModal, badge, empty, formData, productCard, formatDate, formatTime, formatDateTime};
 })();
